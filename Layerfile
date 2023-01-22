@@ -1,0 +1,17 @@
+FROM vm/ubuntu:18.04
+
+MEMORY 2G
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
+RUN sudo npm install npm@latest -g
+
+ENV NODE_OPTIONS=--max-old-space-size=8192
+
+COPY . .
+
+RUN npm install
+
+RUN BACKGROUND npm start
+
+EXPOSE WEBSITE http://localhost:3000
